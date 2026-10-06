@@ -1,10 +1,14 @@
+# Vision-Language Models (VLMs) — Basics
+
 So Vision Language Models, have, text and images both as the data for training, & testing.
 Text prompt as usual becomes text tokens, and ingested into VLM, while image input goes into vision encoder, extract patterns and edges and textures and spatial relationships, converting them into feature vectors.
 Now, it is fed to projecter, which gives token based format embeddings. So text tokens & image tokens, together go into VLM.
 
 ---
 
-### Mental Model
+## Mental Model
+
+```text
                     IMAGE
                       │
                       ▼
@@ -28,6 +32,8 @@ TEXT ───────────────► LLM ◄──────�
                      │◄──────────────────┘
                      ▼
                   Answer
+
+```
 
 ---
 
@@ -75,6 +81,7 @@ Visual Tokens is when, these visual representations are arranged as a sequence a
 Suppose we want a text and it's image - related as in their representations.
 Alignment training tried to make semantically corresponding things close.
 
+```text
         IMAGE
           ↓
     Image Encoder
@@ -91,38 +98,53 @@ Alignment training tried to make semantically corresponding things close.
 
 So image of cat and word "cat", should be highly similar.
 
+```
+
 ---
 
 ## Example
 
 📷 Image of a dog catching a frisbee with text question - "What is the dog doing?"
 
+```text
 Image
  ↓
 pixel values
+```
+
 Raw numerical information
 
+```text
 pixels
  ↓
 ViT / CNN
  ↓
 visual representations
+```
+
 The network extracts meaningful visual information.
 
 [v₁, v₂, v₃, ..., vₙ]
 These encode things about different visual regions and their context.
 
+```text
 visual features
       ↓
 projector / adapter
       ↓
 LLM-compatible representations
+```
+
 Depending on the architecture, those representations are transformed so that they can interact appropriately with language representations.
 
+```text
 [VIS₁] [VIS₂] ... [VISₙ]
 [What] [is] [the] [dog] [doing] [?]
+```
+
 The Transformer can use attention to relate the question to the visual information.
 
+```text
 "What is the dog doing?"
 
              ↓
@@ -130,3 +152,4 @@ The Transformer can use attention to relate the question to the visual informati
          "catching
           a frisbee"
 
+```
