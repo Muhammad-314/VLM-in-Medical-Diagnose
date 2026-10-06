@@ -1,3 +1,54 @@
 So Vision Language Models, have, text and images both as the data for training, & testing.
 Text prompt as usual becomes text tokens, and ingested into VLM, while image input goes into vision encoder, extract patterns and edges and textures and spatial relationships, converting them into feature vectors.
 Now, it is fed to projecter, which gives token based format embeddings. So text tokens & image tokens, together go into VLM.
+
+---
+
+### Mental Model
+IMAGE
+  ↓
+Pixels
+  ↓
+Vision Encoder
+  ↓
+Visual Features / Visual Tokens
+  ↓
+Alignment / Projection
+  ↓
+LLM-compatible representations
+  ↓
+LLM
+  ↓
+TEXT
+
+---
+
+## How does an image become something an LLM can understand?
+
+LLMs aren't inherently able to understand texts, at lowest level, LLM receive vectors only, so our task is how do we transform visual info into representations that can interact meaningfully with the LLM's learned language representations ?
+
+Image pixels are given to vision encoder then to projecter or adapter then to llm, so the image is converted into learned numerical representations that the LLM can use through its attention mechanisms.
+
+---
+
+## Why can't you simply feed pixels into a text LLM?
+
+LLM was trained on different input - tokens
+The model's input space is therefore built around language tokens.
+
+In two images, a same cat can appear shifted slightly or rotated or in different bg, or something else. So their raw pixels would be different, but semantically, they are the same cat.
+So pixels are not good semantic representations.
+
+---
+
+## What is a vision encoder?
+
+A vision encoder is a neural network that takes an image and converts it into a learned representation containing useful visual information. Vision encoder can be a CNN or a transformer (ViT)
+
+---
+
+### ViT
+
+Suppose we have image of 224 x 224, then ViT divide into patches, say 16 x 16, so (224*224)/(16*16) = 196 patches
+So each patches is converted to a vector. Say each vector is vi, so we get this sequence - [v₁, v₂, v₃, ..., v₁₉₆]
+Transformers already know how to process sequences. So ViT applies Transformer-style self-attention to visual patches.
