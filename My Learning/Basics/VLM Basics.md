@@ -5,21 +5,29 @@ Now, it is fed to projecter, which gives token based format embeddings. So text 
 ---
 
 ### Mental Model
-IMAGE
-  ↓
-Pixels
-  ↓
-Vision Encoder
-  ↓
-Visual Features / Visual Tokens
-  ↓
-Alignment / Projection
-  ↓
-LLM-compatible representations
-  ↓
-LLM
-  ↓
-TEXT
+                    IMAGE
+                      │
+                      ▼
+              ┌──────────────┐
+              │Vision Encoder│
+              └──────┬───────┘
+                     │
+                     ▼
+            Visual Features/Tokens
+                     │
+                     ▼
+             Projector / Adapter
+                     │
+                     ▼
+          LLM-compatible representations
+                     │
+                     ▼
+TEXT ───────────────► LLM ◄──────────────┐
+                     │                   │
+                     │   Attention       │
+                     │◄──────────────────┘
+                     ▼
+                  Answer
 
 ---
 
@@ -82,3 +90,43 @@ Alignment training tried to make semantically corresponding things close.
         "cat"
 
 So image of cat and word "cat", should be highly similar.
+
+---
+
+## Example
+
+📷 Image of a dog catching a frisbee with text question - "What is the dog doing?"
+
+Image
+ ↓
+pixel values
+Raw numerical information
+
+pixels
+ ↓
+ViT / CNN
+ ↓
+visual representations
+The network extracts meaningful visual information.
+
+[v₁, v₂, v₃, ..., vₙ]
+These encode things about different visual regions and their context.
+
+visual features
+      ↓
+projector / adapter
+      ↓
+LLM-compatible representations
+Depending on the architecture, those representations are transformed so that they can interact appropriately with language representations.
+
+[VIS₁] [VIS₂] ... [VISₙ]
+[What] [is] [the] [dog] [doing] [?]
+The Transformer can use attention to relate the question to the visual information.
+
+"What is the dog doing?"
+
+             ↓
+
+         "catching
+          a frisbee"
+
