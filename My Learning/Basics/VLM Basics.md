@@ -52,3 +52,33 @@ A vision encoder is a neural network that takes an image and converts it into a 
 Suppose we have image of 224 x 224, then ViT divide into patches, say 16 x 16, so (224*224)/(16*16) = 196 patches
 So each patches is converted to a vector. Say each vector is vi, so we get this sequence - [v₁, v₂, v₃, ..., v₁₉₆]
 Transformers already know how to process sequences. So ViT applies Transformer-style self-attention to visual patches.
+
+---
+
+## What are visual tokens/features?
+
+Visual Features is a learned numerical representation extracted from an image.
+Visual Tokens is when, these visual representations are arranged as a sequence and fed to Transformer like system.
+
+---
+
+## What does alignment mean?
+
+Suppose we want a text and it's image - related as in their representations.
+Alignment training tried to make semantically corresponding things close.
+
+        IMAGE
+          ↓
+    Image Encoder
+          ↓
+     [image vector]
+          ↘
+           similarity ↑
+          ↗
+      [text vector]
+          ↑
+     Text Encoder
+          ↑
+        "cat"
+
+So image of cat and word "cat", should be highly similar.
